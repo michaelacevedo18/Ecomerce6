@@ -1,0 +1,97 @@
+﻿@model Rocosa.Models.Producto
+@{
+    var titulo= "Crear Nuevo Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    @if (Model.Id != 0)
+    {
+        titulo = "Editar Producto"; 
+        <input asp-for="Id" hidden />
+    }
+    <div class="border p-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <h2 class="text-info">@titulo</h2>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-8">
+                            <label asp-for="NombreProducto" class="control-label">Nombre de Producto</label>
+                            <input asp-for="NombreProducto" class="form-control" />
+                            <span asp-validation-for="NombreProducto" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <label asp-for="Precio" class="control-label">Precio</label>
+                            <input asp-for="Precio" class="form-control" />
+                            <span asp-validation-for="Precio" class="text-danger"></span>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-8">
+                            <label asp-for="Descripcion" class="control-label">Descripcion</label>
+                            <input asp-for="Descripcion" class="form-control" />
+                            <span asp-validation-for="Descripcion" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <label asp-for="DescripcionLarga" class="control-label">Descripcion Detallada</label>
+                            <input asp-for="DescripcionLarga" class="form-control" />
+                            <span asp-validation-for="DescripcionLarga" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label asp-for="ImagenUrl" class="form-label">Imagen</label>
+                            <input type="file" name="files" id="imagenId" multiple class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label asp-for="CategoriaId" class="form-label">Categoria</label>
+                            <select asp-for="CategoriaId" asp-items="@ViewBag.categoriaDropDown" class="form-select">
+                                <option disabled selected>--Seleccione una categoria--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="d-grid gap-2 d-md-block">
+                        @if (Model.Id != 0)
+                        {
+                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn btn-primary">Crear Nuevo</button>
+                        }
+                        <a asp-controller="Producto" asp-action="Index" class="btn btn-success">Regresar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+@section Scripts{
+<partial name="_ValidationScriptsPartial" />
+
+<script>
+    function validarImagen(){
+        if(document.getElementById("imagenId").value=="") //El escoger imagen que puse en el div para ingresar imagen
+        {
+        swal("Error", "Seleccione una imagen","error");   //return false o return true para que sepa si continua o no
+        return false;
+        }
+        return true;
+    }
+</script>
+
+}
